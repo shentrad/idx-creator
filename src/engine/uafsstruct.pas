@@ -245,7 +245,41 @@ begin
     end;
 
     //Writing character name
+    if SrfEntry.sName <> '' then begin
+      intBuf := Length(SrfEntry.sName)+4;
+      BlockWrite(F, intBuf, _SizeOf_Integer);
+      BlockWrite(F, Pointer(SrfEntry.sName)^, Length(SrfEntry.sName));
+    end
+    else begin
+      intBuf := 8;
+      BlockWrite(F, intBuf, _SizeOf_Integer);
+      intBuf := 0;
+      BlockWrite(F, intBuf, _SizeOf_Integer);
+    end;
+
+    //Writing subtitle text, doesn't provide accentuated characters support
+    if SrfEntry.sText <> '' then begin
+      j := Length(SrfEntry.sText);
+      intBuf := 4+j+NullByteLength(j);
+      BlockWrite(F, intBuf, _SizeOf_Integer);
+      BlockWrite(F, Pointer(SrfEntry.sText)^, j);
+      WritePadding(F, NullByteLength(j));
+    end
+    else begin
+      intBuf := 4;
+      BlockWrite(F, intBuf, _SizeOf_Integer);
+    end;
+
+    //Writing data
+    intBuf := SrfEntry.sData.Size+4;
+    BlockWrite(F, intBuf, _SizeOf_Integer); //Data size
+    for j:=0 to (intBuf-4)-1 do begin
+      SrfEntry.sData.Read(Buf, _SizeOf_Byte);
+      BlockWrite(F, Buf, _SizeOf_Byte); //Copy to file
+    end;
   end;
+
+  CloseFile(F);
 end;
 
 end.
