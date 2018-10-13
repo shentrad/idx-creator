@@ -68,7 +68,7 @@ end;"/>
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="5">
+    <Units Count="6">
       <Unit0>
         <Filename Value="idxwrite.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -85,13 +85,17 @@ end;"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
       <Unit3>
-        <Filename Value="engine/uafsstruct.pas"/>
+        <Filename Value="engine/uidxstruct.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="engine/uidxstruct.pas"/>
+        <Filename Value="engine/usrfstruct.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="engine/uafsstruct.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit5>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
