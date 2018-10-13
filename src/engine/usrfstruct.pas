@@ -1,4 +1,4 @@
-unit uafsstruct;
+unit usrfstruct;
 
 {$mode objfpc}{$H+}
 
