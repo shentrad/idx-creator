@@ -196,5 +196,73 @@ begin
   end;
 end;
 
+procedure TIdxCreation.SyncCurrentTask(const Task: string);
+begin
+  {$IFDEF LCL}
+  fCurrentTask := Task;
+  Synchronize(@UpdateCurrentTask);
+  {$ELSE}
+  WriteLn('[i]', Task);
+  {$ENDIF}
+end;
+
+{$IFDEF LCL}
+
+procedure TIdxCreation.SyncPercentage;
+begin
+  Synchronize(@UpdatePercentage);
+end;
+
+procedure TIdxCreation.SyncDefaultFormValue;
+begin
+  Synchronize(@UpdateDefaultFormValue);
+end;
+
+procedure TIdxCreation.UpdatePercentage;
+var
+  i: Integer;
+  floatBuf: Real;
+begin
+  i := fProgressWindow.ProgressBar1.Position;
+  fProgressWindow.ProgressBar1.Position := i+1;
+  floatBuf := SimpleRoundTo((100*(i+1))/fProgressCount, -2);
+  fProgressWindow.Panel1.Caption := FloatToStr(floatBuf)+'%';
+  Application.ProcessMessages;
+end;
+
+procedure TIdxCreation.UpdateCurrentTask;
+begin
+  fProgressWindow.lblCurrentTask.Caption := 'Current task: '+fCurrentTask;
+end;
+
+procedure TIdxCreation.UpdateDefaultFormValue;
+begin
+  //Setting progress form main value
+  fProgressWindow.Caption := 'Creation in progress... '+ExtractFileName(fNewIdxName);
+  fProgressWindow.lblCurrentTask.Caption := 'Current task:';
+  fProgressWindow.Position := poMainFormCenter;
+  fProgressWindow.ProgressBar1.Max := fProgressCount;
+  fProgressWindow.btCancel.OnClick := Self.CancelBtnClick;
+  fProgressWindow.Panel1.Caption := '0%';
+  fProgressWindow.Show;
+end;
+
+procedure TIdxCreation.CancelBtnClick(Sender: TObject);
+begin
+  Terminate;
+end;
+
+{$ENDIF}
+
+procedure TIdxCreation.CloseThread(Sender: TObject);
+begin
+  {$IFDEF LCL}
+  if Assigned(fProgressWindow) then begin
+    fProgressWindow.Release;
+  end;
+  {$ENDIF}
+  ThreadTerminated := True;
+end;
+
 end.
 
