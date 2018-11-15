@@ -8,7 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, progress, main, xmlutils, uidxstruct, usrfstruct, uafsstruct,
-  uidxcreation
+  uidxcreation, uidxtemplatecreation
   { you can add units after this };
 
 {$R *.res}
