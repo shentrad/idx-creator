@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <General>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
@@ -59,16 +59,17 @@ end;"/>
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="1">
       <Item1>
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="9">
+    <Units Count="10">
       <Unit0>
         <Filename Value="idxwrite.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -110,6 +111,10 @@ end;"/>
         <Filename Value="engine/uidxtemplatecreation.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="engine/s1idx_intf.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

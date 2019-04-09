@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 566
+  Left = 578
   Height = 328
-  Top = 340
+  Top = 387
   Width = 417
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -10,7 +10,7 @@ object frmMain: TfrmMain
   ClientWidth = 417
   Color = clBtnFace
   Position = poScreenCenter
-  LCLVersion = '1.8.4.0'
+  LCLVersion = '2.0.0.4'
   object rgGame: TRadioGroup
     Left = 8
     Height = 48
