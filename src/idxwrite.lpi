@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <General>
+      <Flags>
+        <CompatibilityMode Value="True"/>
+      </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <MainUnit Value="0"/>
       <Title Value="idxwrite"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
@@ -24,13 +26,14 @@
             <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Conditionals Value="//Unix and Darwin (macOS) specific options
-if SrcOS = 'unix' then begin
-  CustomOptions += ' -dUseCThreads';
+if SrcOS = &apos;unix&apos; then begin
+  CustomOptions += &apos; -dUseCThreads&apos;;
 
   //Remove this condition if your macOS version is &lt; 10.14
-  if TargetOS = 'darwin' then begin
-    CustomOptions += ' -WM10.14';
-  end;
+  //Probably not needed anymore as of 2023
+  {if TargetOS = &apos;darwin&apos; then begin
+    CustomOptions += &apos; -WM10.14&apos;;
+  end;}
 end;"/>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
@@ -69,7 +72,7 @@ end;"/>
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="10">
+    <Units Count="14">
       <Unit0>
         <Filename Value="idxwrite.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -115,6 +118,22 @@ end;"/>
         <Filename Value="engine/s1idx_intf.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit9>
+      <Unit10>
+        <Filename Value="engine/s2idx.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="../../common/src/uintlist.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="../../common/src/charsutil.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="engine/s2idx_intf.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -124,17 +143,12 @@ end;"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="units;engine;../../common/src/progress"/>
+      <OtherUnitFiles Value="units;engine;../../common/src/progress;../../common/src"/>
       <UnitOutputDirectory Value="../lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Conditionals Value="//Unix and Darwin (macOS) specific options
-if SrcOS = 'unix' then begin
-  CustomOptions += ' -dUseCThreads';
-
-  //Remove this condition if your macOS version is &lt; 10.14
-  if TargetOS = 'darwin' then begin
-    CustomOptions += ' -WM10.14';
-  end;
+if SrcOS = &apos;unix&apos; then begin
+  CustomOptions += &apos; -dUseCThreads&apos;;
 end;"/>
     <Parsing>
       <SyntaxOptions>

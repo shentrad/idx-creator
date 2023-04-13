@@ -54,7 +54,7 @@ begin
   CreateShenmue1Idx(ModifiedAFS, OutputIDX, '', '');
 end;
 
-procedure CreateShenmueIIdx(const ModifiedAFS, OutputIDX, TemplateAFS, TemplateIDX: String);
+procedure CreateShenmue1Idx(const ModifiedAFS, OutputIDX, TemplateAFS, TemplateIDX: String);
 var
   thOK: Boolean;
 begin
