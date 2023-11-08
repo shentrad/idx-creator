@@ -14,7 +14,12 @@ No binaries are available at the moment.
 
 ## How-to
 
-This project is a work in progress and can not be built properly just yet ! Instructions will be added when the code is ready.
+Warning : This repository is a work in progress, compiled code could still produce errors.
+
+This project can be compiled using the latest stable version of [Lazarus/Free Pascal](http://www.lazarus-ide.org/).
+
+Also needed:
+- A copy of the latest [shentrad/common repository](https://github.com/shentrad/common).
 
 ## License
 
