@@ -30,7 +30,7 @@ type
     function MakeIdx(AfsFileName, IdxFileName: TFileName): Boolean;
     property OnStart: TIdxCreationStartEvent read fIdxCreationStart write fIdxCreationStart;
     property OnStatus: TIdxStatusEvent read fIdxStatus write fIdxStatus;
-    property OnProgress: TIdxCreationProgressEvent read fIdxCreationProgressEvent write fCreationProgressEvent;
+    property OnProgress: TIdxCreationProgressEvent read fIdxCreationProgressEvent write fIdxCreationProgressEvent;
     property OnCompleted: TIdxCreationEndEvent read fIdxCreationEndEvent write fIdxCreationEndEvent;
   end;
 
@@ -105,7 +105,7 @@ begin
           if i = 0 then
           begin
             Seek(fAfs, files_offset[i]-8);
-            BlockRead(list_offset, _SizeOf_Integer);
+            BlockRead(fAfs, list_offset, _SizeOf_Integer);
           end;
 
           //Seeking to files list
@@ -159,7 +159,7 @@ begin
               Inc(current_offset, intBuf);
               Seek(fAfs, current_offset);
               //Skip subtitle text or data
-              BlockRead(fAfs, intBuffer, _SizeOf_Integer);
+              BlockRead(fAfs, intBuf, _SizeOf_Integer);
               Inc(current_offset, intBuf);
               Seek(fAfs, current_offset);
               //Skip 'EXTD' section
@@ -273,10 +273,11 @@ begin
           Delete(fileName, Pos(delete1, fileName), Length(delete1));
 
           intBuf := 8-Length(fileName);
+          byteBuf := 95;
 
           for y:=0 to intBuf-1 do
           begin
-            BlockWrite(fIdx, 95, _SizeOf_Byte);
+            BlockWrite(fIdx, byteBuf, _SizeOf_Byte);
           end;
 
           BlockWrite(fIdx, fileName[1], Length(fileName));
@@ -304,9 +305,10 @@ begin
         strBuf := 'ENDI';
         BlockWrite(fIdx, strBuf[1], _SizeOf_Integer);
 
-        for i:= to 3 do
+        byteBuf := 0;
+        for i:=0 to 3 do
         begin
-          BlockWrite(fIdx, 0, _SizeOf_Byte);
+          BlockWrite(fIdx, byteBuf, _SizeOf_Byte);
         end;
 
         if Assigned(fIdxStatus) then

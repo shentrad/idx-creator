@@ -16,39 +16,42 @@ uses laz2_DOM, laz2_XMLWrite, laz2_XMLRead, main;
 procedure LoadConfig(const FileName: TFileName);
 var
   xmlDoc: TXMLDocument;
-  currentNode: TDOMNode;
-  oldIdx, oldAfs, newAfs, newIdx, game: String;
+  autoSaveBool, templateBool, oldIdx, oldAfs, newAfs, newIdx, game, wWidth, wHeight: TDOMNode;
 begin
   if FileExists(FileName) then begin
     ReadXMLFile(xmlDoc, FileName);
     if xmlDoc.DocumentElement.NodeName <> 'idxcreatorcfg' then Exit;
-
     try
-      try
-        currentNode := xmlDoc.DocumentElement.FindNode('remember');
-        if Assigned(currentNode) then frmMain.cbConfig.Checked := StrToBool(currentNode.FirstChild.NodeValue);
-      except end;
+      autoSaveBool := xmlDoc.DocumentElement.FindNode('remember');
 
-      if (Assigned(currentNode)) and (currentNode.FirstChild.NodeValue = 'true') then begin
-        //Template groupbox
-        currentNode := xmlDoc.DocumentElement.FindNode('template');
-        if Assigned(currentNode) then frmMain.templateChkBox.Checked := StrToBool(currentNode.FirstChild.NodeValue);
+      if (Assigned(autoSaveBool)) and (autoSaveBool.TextContent = '-1') then begin
+        //Auto-save config checkbox
+        frmMain.cbConfig.Checked := StrToBool(autoSaveBool.TextContent);
 
-        oldIdx := xmlDoc.DocumentElement.FindNode('oldidx').FirstChild.NodeValue;
-        oldAfs := xmlDoc.DocumentElement.FindNode('oldafs').FirstChild.NodeValue;
-        newAfs := xmlDoc.DocumentElement.FindNode('newafs').FirstChild.NodeValue;
-        newIdx := xmlDoc.DocumentElement.FindNode('newidx').FirstChild.NodeValue;
-        game := xmlDoc.DocumentElement.FindNode('game').FirstChild.NodeValue;
+        //Fetching nodes content
+        templateBool := xmlDoc.DocumentElement.FindNode('template');
+        wWidth := xmlDoc.DocumentElement.FindNode('width');
+        wHeight := xmlDoc.DocumentElement.FindNode('height');
+        oldIdx := xmlDoc.DocumentElement.FindNode('oldidx');
+        oldAfs := xmlDoc.DocumentElement.FindNode('oldafs');
+        newAfs := xmlDoc.DocumentElement.FindNode('newafs');
+        newIdx := xmlDoc.DocumentElement.FindNode('newidx');
+        game := xmlDoc.DocumentElement.FindNode('game');
 
-        frmMain.editOldIdx.Text := oldIdx;
-        frmMain.editOldAfs.Text := oldAfs;
-        frmMain.editModAfs.Text := newAfs;
-        frmMain.editNewIdx.Text := newIdx;
+        if Assigned(templateBool) then frmMain.templateChkBox.Checked := StrToBool(templateBool.TextContent);
+        if Assigned(wWidth) then frmMain.Width := StrToInt(wWidth.TextContent);
+        if Assigned(wHeight) then frmMain.Height := StrToInt(wHeight.TextContent);
+        if Assigned(oldIdx) then frmMain.editOldIdx.Text := oldIdx.TextContent;
+        if Assigned(oldAfs) then frmMain.editOldAfs.Text := oldAfs.TextContent;
+        if Assigned(newAfs) then frmMain.editModAfs.Text := newAfs.TextContent;
+        if Assigned(newIdx) then frmMain.editNewIdx.Text := newIdx.TextContent;
 
-        if game = 's2' then
-          frmMain.GameVersion := gvShenmue2;
-        else
-          frmMain.GameVersion := gvShenmue;
+        if Assigned(game) then begin
+          case game.TextContent of
+            's1': frmMain.GameVersion := gvShenmue;
+            's2': frmMain.GameVersion := gvShenmue2;
+          end;
+        end;
       end;
     finally
       xmlDoc.Free;
@@ -84,6 +87,8 @@ begin
     //Writing config values
     AddTextNode(xmlRoot, 'remember', BoolToStr(frmMain.cbConfig.Checked));
     AddTextNode(xmlRoot, 'template', BoolToStr(frmMain.templateChkBox.Checked));
+    AddTextNode(xmlRoot, 'width', IntToStr(frmMain.Width));
+    AddTextNode(xmlRoot, 'height', IntToStr(frmMain.Height));
     AddTextNode(xmlRoot, 'oldIdx', frmMain.editOldIdx.Text);
     AddTextNode(xmlRoot, 'oldafs', frmMain.editOldAfs.Text);
     AddTextNode(xmlRoot, 'newafs', frmMain.editModAfs.Text);

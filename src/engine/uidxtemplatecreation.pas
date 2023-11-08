@@ -54,7 +54,7 @@ begin
   {$IFDEF LCL}fProgressWindow := TfrmProgress.Create(nil);{$ENDIF}
   ThreadTerminated := False;
   ErrorRaised := False;
-  OnTerminate := CloseThread;
+  OnTerminate := @CloseThread;
 end;
 
 procedure TIdxTemplateCreation.Execute;
@@ -113,7 +113,7 @@ begin
             end;
 
             //Finding new offset
-            for j:=0 to oldSrfCount-1 do begin
+            for j:=0 to oldSrf.Count-1 do begin
               if subOffset = oldSrf[j].Offset then begin
                 subNum := j;
                 Break;
@@ -176,7 +176,7 @@ procedure TIdxTemplateCreation.SyncCurrentTask(const Task: string);
 begin
   {$IFDEF LCL}
   fCurrentTask := Task;
-  Synchronize(UpdateCurrentTask);
+  Synchronize(@UpdateCurrentTask);
   {$ELSE}
   WriteLn('[i] ', Task);
   {$ENDIF}
@@ -186,12 +186,12 @@ end;
 
 procedure TIdxTemplateCreation.SyncPercentage;
 begin
-  Synchronize(UpdatePercentage);
+  Synchronize(@UpdatePercentage);
 end;
 
 procedure TIdxTemplateCreation.SyncDefaultFormValue;
 begin
-  Synchronize(UpdateDefaultFormValue);
+  Synchronize(@UpdateDefaultFormValue);
 end;
 
 procedure TIdxTemplateCreation.UpdatePercentage;
@@ -218,7 +218,7 @@ begin
   fProgressWindow.lblCurrentTask.Caption := 'Current task:';
   fProgressWindow.Position := poMainFormCenter;
   fProgressWindow.ProgressBar1.Max := fProgressCount;
-  fProgressWindow.btCancel.OnClick := Self.CancelBtnClick;
+  fProgressWindow.btCancel.OnClick := @CancelBtnClick;
   fProgressWindow.Panel1.Caption := '0%';
   fProgressWindow.Show;
 end;

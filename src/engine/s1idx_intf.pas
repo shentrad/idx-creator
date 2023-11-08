@@ -5,7 +5,7 @@ unit s1idx_intf;
 interface
 
 uses
-  System, SysUtils, uidxtemplatecreation, uidxcreation;
+  SysUtils, uidxtemplatecreation, uidxcreation;
 
 procedure CreateShenmue1Idx(const ModifiedAFS, OutputIDX: String); overload;
 procedure CreateShenmue1Idx(const ModifiedAFS, OutputIDX, TemplateAFS, TemplateIDX: String); overload;

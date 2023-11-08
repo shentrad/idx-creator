@@ -19,8 +19,8 @@ type
     public
       property CharName: String read sName write sName;
       property Text: String read sText write sText;
-      property Data: TMemoryStream read sData
-      property Offset: Integer read sOffset
+      property Data: TMemoryStream read sData;
+      property Offset: Integer read sOffset;
   end;
 
   TSrfStruct = class
@@ -142,7 +142,7 @@ begin
       //Reading first value
       BlockRead(F, intBuf, _SizeOf_Integer);
       if intBuf = 8 then begin
-        SrfEntry := TSrfEntry := TSrfEntry.Create;
+        SrfEntry := TSrfEntry.Create;
         SrfEntry.sOffset := (FilePos(F)-fOffset)-4;
 
         //Reading filename

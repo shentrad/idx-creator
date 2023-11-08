@@ -22,18 +22,12 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="units;engine;../../common/src/progress"/>
+            <OtherUnitFiles Value="units;engine;../../common/src/progress;../../common/src"/>
             <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Conditionals Value="//Unix and Darwin (macOS) specific options
 if SrcOS = &apos;unix&apos; then begin
   CustomOptions += &apos; -dUseCThreads&apos;;
-
-  //Remove this condition if your macOS version is &lt; 10.14
-  //Probably not needed anymore as of 2023
-  {if TargetOS = &apos;darwin&apos; then begin
-    CustomOptions += &apos; -WM10.14&apos;;
-  end;}
 end;"/>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
@@ -44,6 +38,7 @@ end;"/>
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <DebugInfoType Value="dsDwarf3"/>
             </Debugging>
             <LinkSmart Value="True"/>
             <Options>

@@ -20,7 +20,7 @@ type
     procedure CreateIdx(var AfsStruct: TAfsStruct; var IdxStruct: TIdxStruct; var SrfStruct: TSrfStruct; const Reversed: Boolean);
     function VerifyOrder(var AfsStruct: TAfsStruct): Boolean;
     function DeleteSubStr(Str, SubStr: String): String;
-    procedure SyncCurrentTasl(const Task: String);
+    procedure SyncCurrentTask(const Task: String);
     {$IFDEF LCL}
     procedure SyncPercentage;
     procedure SyncDefaultFormValue;
@@ -50,7 +50,7 @@ begin
 
   ThreadTerminated := False;
   ErrorRaised := False;
-  OnTerminate := CloseThread;
+  OnTerminate := @CloseThread;
 end;
 
 procedure TIdxCreation.Execute;
@@ -70,7 +70,7 @@ begin
 
       fProgressCount := newAfs.Count;
       if fProgressCount > 0 then begin
-        {$IFDEF LCL}SyncDefaultFormValue{$ENDIF}
+        {$IFDEF LCL}SyncDefaultFormValue;{$ENDIF}
 
         //Verifying file order
         reversedOrder := VerifyOrder(newAfs);
@@ -158,7 +158,7 @@ begin
       if not Reversed then begin
         for j:=startFile to endFile do begin
           //Modifying IDX entry;
-            idxEntry := idxStruct[i=j];
+            idxEntry := idxStruct[i-j];
             idxEntry.LinkedSrf := i;
             subOffset := SrfStruct[j-startFile].Offset;
             idxEntry.SubOffset := subOffset;
@@ -242,7 +242,7 @@ begin
   fProgressWindow.lblCurrentTask.Caption := 'Current task:';
   fProgressWindow.Position := poMainFormCenter;
   fProgressWindow.ProgressBar1.Max := fProgressCount;
-  fProgressWindow.btCancel.OnClick := Self.CancelBtnClick;
+  fProgressWindow.btCancel.OnClick := @CancelBtnClick;
   fProgressWindow.Panel1.Caption := '0%';
   fProgressWindow.Show;
 end;
