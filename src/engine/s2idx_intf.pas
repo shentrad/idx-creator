@@ -14,7 +14,7 @@ uses {$IFDEF LCL}main, Forms, Math, progress,{$ENDIF} s2idx;
 
 {$IFDEF LCL}
 var
-  fProgressWindow: tfrmProgress;
+  fProgressWindow: TfrmProgress;
 
 procedure S2Idx_OnStart(const MaxFiles: Integer);
 begin
@@ -43,6 +43,7 @@ begin
   i := fProgressWindow.ProgressBar1.Position;
   fProgressWindow.ProgressBar1.Position := i+1;
   floatBuf := SimpleRoundTo((100*(i+1))/fProgressWindow.ProgressBar1.Max, -2);
+  fProgressWindow.Panel1.Caption := FloatToStr(floatBuf)+'%';
   Application.ProcessMessages;
 end;
 
