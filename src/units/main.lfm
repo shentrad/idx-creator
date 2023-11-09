@@ -1,13 +1,14 @@
 object frmMain: TfrmMain
-  Left = 815
+  Left = 1344
   Height = 328
-  Top = 219
+  Top = 310
   Width = 417
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = '< Dynamic Title >'
   ClientHeight = 328
   ClientWidth = 417
   Color = clBtnFace
+  Constraints.MaxHeight = 328
   Constraints.MinHeight = 328
   Constraints.MinWidth = 417
   Position = poScreenCenter
