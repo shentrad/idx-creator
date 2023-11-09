@@ -16,7 +16,7 @@ uses laz2_DOM, laz2_XMLWrite, laz2_XMLRead, main;
 procedure LoadConfig(const FileName: TFileName);
 var
   xmlDoc: TXMLDocument;
-  autoSaveBool, templateBool, oldIdx, oldAfs, newAfs, newIdx, game, wWidth, wHeight: TDOMNode;
+  autoSaveBool, templateBool, oldIdx, oldAfs, newAfs, newIdx, game, wWidth: TDOMNode;
 begin
   if FileExists(FileName) then begin
     ReadXMLFile(xmlDoc, FileName);
@@ -31,7 +31,6 @@ begin
         //Fetching nodes content
         templateBool := xmlDoc.DocumentElement.FindNode('template');
         wWidth := xmlDoc.DocumentElement.FindNode('width');
-        wHeight := xmlDoc.DocumentElement.FindNode('height');
         oldIdx := xmlDoc.DocumentElement.FindNode('oldidx');
         oldAfs := xmlDoc.DocumentElement.FindNode('oldafs');
         newAfs := xmlDoc.DocumentElement.FindNode('newafs');
@@ -40,7 +39,6 @@ begin
 
         if Assigned(templateBool) then frmMain.templateChkBox.Checked := StrToBool(templateBool.TextContent);
         if Assigned(wWidth) then frmMain.Width := StrToInt(wWidth.TextContent);
-        if Assigned(wHeight) then frmMain.Height := StrToInt(wHeight.TextContent);
         if Assigned(oldIdx) then frmMain.editOldIdx.Text := oldIdx.TextContent;
         if Assigned(oldAfs) then frmMain.editOldAfs.Text := oldAfs.TextContent;
         if Assigned(newAfs) then frmMain.editModAfs.Text := newAfs.TextContent;
@@ -88,7 +86,6 @@ begin
     AddTextNode(xmlRoot, 'remember', BoolToStr(frmMain.cbConfig.Checked));
     AddTextNode(xmlRoot, 'template', BoolToStr(frmMain.templateChkBox.Checked));
     AddTextNode(xmlRoot, 'width', IntToStr(frmMain.Width));
-    AddTextNode(xmlRoot, 'height', IntToStr(frmMain.Height));
     AddTextNode(xmlRoot, 'oldIdx', frmMain.editOldIdx.Text);
     AddTextNode(xmlRoot, 'oldafs', frmMain.editOldAfs.Text);
     AddTextNode(xmlRoot, 'newafs', frmMain.editModAfs.Text);
