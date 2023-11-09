@@ -5,7 +5,7 @@ unit s1idx_intf;
 interface
 
 uses
-  SysUtils, uidxtemplatecreation, uidxcreation;
+  SysUtils, Forms, uidxtemplatecreation, uidxcreation;
 
 procedure CreateShenmue1Idx(const ModifiedAFS, OutputIDX: String); overload;
 procedure CreateShenmue1Idx(const ModifiedAFS, OutputIDX, TemplateAFS, TemplateIDX: String); overload;
@@ -19,15 +19,14 @@ begin
   Result := False;
   idxThread := TIdxTemplateCreation.Create(OutputIDX, ModifiedAFS, TemplateIDX, TemplateAFS);
   repeat
-    sleep(10);
+    //Waiting until the thread is finished
+    Application.ProcessMessages;
   until (idxThread.ThreadTerminated);
 
   //If there's no error...
   if not idxThread.ErrorRaised then begin
     Result := True;
   end;
-
-  idxThread.Free;
 end;
 
 function StartCreation(const ModifiedAFS, OutputIDX: String): Boolean;
@@ -38,15 +37,14 @@ begin
   idxThread := TIdxCreation.Create(ModifiedAFS, OutputIDX);
 
   repeat
-    Sleep(10);
+    //Waiting until the thread is finished
+    Application.ProcessMessages;
   until (idxThread.ThreadTerminated);
 
   //If there's no error...
   if not idxThread.ErrorRaised then begin
     Result := True;
   end;
-
-  idxThread.Free;
 end;
 
 procedure CreateShenmue1Idx(const ModifiedAFS, OutputIDX: String);

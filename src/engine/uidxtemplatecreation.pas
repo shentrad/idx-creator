@@ -157,8 +157,6 @@ begin
     newAfs.Free;
     newSrf.Free;
   end;
-
-  {$IFNDEF LCL}CloseThread(Self);{$ENDIF}
 end;
 
 function TIdxTemplateCreation.VerifyCount(const OldIdxCount, OldAfsCount, NewAfsCount: Integer): Boolean;

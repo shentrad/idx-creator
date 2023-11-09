@@ -93,8 +93,6 @@ begin
     newIdx.Free;
     newSrf.Free;
   end;
-
-  {$IFDEF LCL}CloseThread(Self);{$ENDIF}
 end;
 
 procedure TIdxCreation.CreateIdx(var AfsStruct: TAfsStruct; var IdxStruct: TIdxStruct; var SrfStruct: TSrfStruct; const Reversed: Boolean);
@@ -158,7 +156,7 @@ begin
       if not Reversed then begin
         for j:=startFile to endFile do begin
           //Modifying IDX entry;
-            idxEntry := idxStruct[i-j];
+            idxEntry := idxStruct.Items[j];
             idxEntry.LinkedSrf := i;
             subOffset := SrfStruct[j-startFile].Offset;
             idxEntry.SubOffset := subOffset;
