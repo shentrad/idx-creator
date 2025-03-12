@@ -86,7 +86,7 @@ begin
     AddTextNode(xmlRoot, 'remember', BoolToStr(frmMain.cbConfig.Checked));
     AddTextNode(xmlRoot, 'template', BoolToStr(frmMain.templateChkBox.Checked));
     AddTextNode(xmlRoot, 'width', IntToStr(frmMain.Width));
-    AddTextNode(xmlRoot, 'oldIdx', frmMain.editOldIdx.Text);
+    AddTextNode(xmlRoot, 'oldidx', frmMain.editOldIdx.Text);
     AddTextNode(xmlRoot, 'oldafs', frmMain.editOldAfs.Text);
     AddTextNode(xmlRoot, 'newafs', frmMain.editModAfs.Text);
     AddTextNode(xmlRoot, 'newidx', frmMain.editNewIdx.Text);
