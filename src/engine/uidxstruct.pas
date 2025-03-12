@@ -54,7 +54,7 @@ implementation
 constructor TIdxStruct.Create;
 begin
   fList := TList.Create;
-    fSrfCount := 0;
+  fSrfCount := 0;
 end;
 
 destructor TIdxStruct.Destroy;
