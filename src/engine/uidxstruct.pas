@@ -54,7 +54,7 @@ implementation
 constructor TIdxStruct.Create;
 begin
   fList := TList.Create;
-  fSrfCount := 0;
+    fSrfCount := 0;
 end;
 
 destructor TIdxStruct.Destroy;
@@ -143,17 +143,25 @@ begin
   SetLength(strBuf, 4);
   BlockRead(F, Pointer(strBuf)^, Length(strBuf));
   if strBuf = IDX_SIGN then begin
-    IdxEntry := TIdxEntry.Create;
+    BlockRead(F, fSrfCount, _SizeOf_Word); //Entry count with SRF
+    BlockRead(F, eCount, _SizeOf_Word); //Entry count without SRF
+    Dec(fSrfCount, eCount);
 
-    //Entry name
-    SetLength(strBuf, 12);
-    BlockRead(F, Pointer(strBuf)^, Length(strBuf));
-    IdxEntry.Name := Trim(strBuf);
+    Seek(F, FilePos(F)+12); //Seeking to entries list
 
-    BlockRead(F, IdxEntry.iNumber, _SizeOf_Word); //File number
-    BlockRead(F, IdxEntry.iSrf, _SizeOf_Word); //Linked SRF number
-    BlockRead(F, IdxEntry.iSubOffset, _SizeOf_Integer); //Offset in SRF
-    Add(IdxEntry);
+    for i:=0 to eCount-1 do begin
+      IdxEntry := TIdxEntry.Create;
+
+      //Entry name
+      SetLength(strBuf, 12);
+      BlockRead(F, Pointer(strBuf)^, Length(strBuf));
+      IdxEntry.Name := Trim(strBuf);
+
+      BlockRead(F, IdxEntry.iNumber, _SizeOf_Word); //File number
+      BlockRead(F, IdxEntry.iSrf, _SizeOf_Word); //Linked SRF number
+      BlockRead(F, IdxEntry.iSubOffset, _SizeOf_Integer); //Offset in SRF
+      Add(IdxEntry);
+    end;
   end;
 
   CloseFile(F);
